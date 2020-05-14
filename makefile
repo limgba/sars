@@ -5,9 +5,10 @@ libdir=./lib
 incdir=./include
 
 target=main
-src=$(shell find . -name "*.cpp")
-#src=$(wildcard $(srcdir)/*.cpp)
+src=$(shell find $(srcdir) -name "*.cpp")
 obj=$(patsubst %.cpp, %.o, $(src))
+#obj:=$(notdir $(obj))
+#obj:=$(patsubst %.o, $(objdir)/%.o, $(obj))
 lib=$(notdir $(shell find $(libdir) -name "*.so"))pthread
 
 CXX=g++
@@ -17,7 +18,8 @@ CXXLIB=-I$(incdir) -L$(libdir) -l$(lib)
 $(target):$(obj)
 	$(CXX) $(CXXFLAGS) $(CXXLIB) -o $@ $^
 
-%.o:%.cpp
+#$(obj):$(src)
+%.o:$.cpp
 	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 echo:
