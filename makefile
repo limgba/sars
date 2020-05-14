@@ -15,7 +15,7 @@ $(target):$(obj)
 	$(CXX) $(CXXFLAGS) $(CXXLIB) -o $@ $^
 
 %.o:$.cpp
-	$(CXX) -c $(CXXFLAGS) $< -o $@
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 echo:
 	@echo $(target)
