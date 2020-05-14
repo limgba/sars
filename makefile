@@ -4,22 +4,21 @@ objdir=./obj
 libdir=./lib
 incdir=./include
 
-target=$($bindir)/main
-subdir=$(shell ls -d $(srcdir)/*/)
-subsrc=$(shell find $(subdir) -name "*.cpp")
-src=$(wildcard $(srcdir)/*.cpp) $(subsrc)
-obj=$(patsubst $(srcdir)/%.cpp, $(objdir)/%.o, $(src))
+target=main
+src=$(shell find . -name "*.cpp")
+#src=$(wildcard $(srcdir)/*.cpp)
+obj=$(patsubst %.cpp, %.o, $(src))
 lib=$(notdir $(shell find $(libdir) -name "*.so"))pthread
 
 CXX=g++
-CXXFLAGS=-Wall -std=c++11 -g
+CXXFLAGS=-std=c++11 -g -O3 -Wall 
 CXXLIB=-I$(incdir) -L$(libdir) -l$(lib)
 
 $(target):$(obj)
-	$(CXX) $(CXXFLAGS) -o $@ $^ $(CXXLIB)
+	$(CXX) $(CXXFLAGS) $(CXXLIB) -o $@ $^
 
-$(obj):$(src)
-	$(CXX) $(CXXFLAGS) $<
+%.o:%.cpp
+	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 echo:
 	@echo $(target)
