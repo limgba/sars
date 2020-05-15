@@ -1,0 +1,24 @@
+sars drug
+human hospital
+player
+main.cpp
+
+
+win_condition
+	sars.num == 0
+lose_condition
+	human.total_num == human.infection_num
+
+update
+	sars.num += sars.num * sars.fertility;
+	human.hp -= sars.toxicity * sars.num;
+	human.infection_num += sars.contagion;
+
+event
+	human.hp <= 0
+		--human.total_num;
+		--human.infection;
+	human.infection_num >= human.taotal_num
+		lose;
+	--human.total_num
+		human.satisfaction -= 2;
