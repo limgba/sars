@@ -1,27 +1,35 @@
 srcdir=./src
 libdir=./lib
-incdir=./include
+incdir=-I./include -I./src
 
 target=main.out
 src=$(shell find $(srcdir) -name "*.cpp")
 obj=$(patsubst %.cpp, %.o, $(src))
-lib=$(notdir $(shell find $(libdir) -name "*.so"))pthread
+dir=$(patsubst %.cpp, %.d, $(src))
+lib=$(notdir $(shell find $(libdir) -name "*.so"))
+lib:=$(patsubst lib%.so,-l%, $(lib)) -lpthread
 
 CXX=g++
 CXXFLAGS=-std=c++11 -g -O3 -Wall 
-CXXLIB=-I$(incdir) -L$(libdir) -l$(lib)
+CXXLIB=$(incdir) -L$(libdir) $(lib)
 
 $(target):$(obj)
 	$(CXX) $(CXXFLAGS) $(CXXLIB) -o $@ $^
 
-%.o:$.cpp
-	$(CXX) $(CXXFLAGS) -c -o $@ $<
+-include $(dir)
+%.d:%.cpp
+	@set -e; \
+	rm -f $@; \
+	$(CXX) -MM $(CXXFLAGS) $< > $@.$$$$; \
+	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+	rm -f $@.$$$$
 
 echo:
 	@echo $(target)
 	@echo $(obj)
 	@echo $(src)
+	@echo $(dir)
 	@echo $(CXXLIB)
 
 clean:
-	rm $(obj) $(target) -f
+	rm -f $(obj) $(target) $(dir)

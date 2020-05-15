@@ -20,6 +20,7 @@ public:
 	Sars sars;
 	Drug drug;
 private:
+	int a;
 	int total_num;			// 总数
 	int infection_num;		// 感染数量
 	int satisfaction;		// 满意度

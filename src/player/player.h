@@ -7,7 +7,8 @@
 class Player
 {
 public:
-	Player() : money(0) {}
+	Player() : money(0), is_end(false) {}
+	void Update();
 	void Update(time_t now_sec, clock_t interval);
 	//bool BuildHospital();
 	//bool DevDrug();
@@ -18,12 +19,16 @@ public:
 	//bool IsEnd();
 	//bool IsWin();
 	
+private:
+	bool CheckWin();
+	bool CheckLose();
 public:
 	Human human;
 	Hospital hospital;
 
 private:
 	int money;
+	bool is_end;
 };
 
 

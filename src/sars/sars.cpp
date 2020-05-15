@@ -5,4 +5,7 @@ void Sars::Update(time_t now_sec, clock_t interval)
 
 }
 
-
+int Sars::GetNum()
+{
+	return num;
+}
