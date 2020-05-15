@@ -8,10 +8,12 @@ obj=$(patsubst %.cpp, %.o, $(src))
 dir=$(patsubst %.cpp, %.d, $(src))
 lib=$(notdir $(shell find $(libdir) -name "*.so"))
 lib:=$(patsubst lib%.so,-l%, $(lib)) -lpthread
+staticlib=$(notdir $(shell find $(libdir) -name "*.a"))
+staticlib:=$(patsubst lib%.a,-l%, $(staticlib))
 
 CXX=g++
 CXXFLAGS=-std=c++11 -g -O3 -Wall 
-CXXLIB=$(incdir) -L$(libdir) $(lib)
+CXXLIB=$(incdir) -L$(libdir) $(lib) $(staticlib)
 
 $(target):$(obj)
 	$(CXX) $(CXXFLAGS) $(CXXLIB) -o $@ $^
