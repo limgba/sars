@@ -1,12 +1,17 @@
 #ifndef __CALLBACKVECTOR_H__
 #define __CALLBACKVECTOR_H__
 
-typedef size_t typeid_t;
+#include <algorithm>
+#include <functional>
+#include <map>
+#include <vector>
+
+typedef size_t type_id_t;
 
 class CallBackVector
 {
 public:
-	void remove(const int token) = 0;
+	virtual void remove(const int token) = 0;
 };
 
 template<typename Event>

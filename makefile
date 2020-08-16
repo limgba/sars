@@ -11,7 +11,7 @@ lib:=$(patsubst lib%.so,-l%, $(lib)) -lpthread
 staticlib=$(shell find $(libdir) -name "*.a")
 
 CXX=g++
-CXXFLAGS=-std=c++11 -g -O3 -Wall 
+CXXFLAGS=-std=c++2a -g -O3 -Wall 
 CXXLIB=$(incdir) -L$(libdir) $(lib)
 
 $(target):$(obj)
@@ -34,3 +34,4 @@ echo:
 
 clean:
 	rm -f $(obj) $(target) $(dir)
+	find . -name *.d* | xargs rm -f

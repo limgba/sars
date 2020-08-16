@@ -3,11 +3,21 @@
 #include <iostream>
 #include "../hospital/hospital.h"
 #include "../human/human.h"
+#include "../client/client.h"
+#include "question/question.h"
+
+enum GAME_STATUS
+{
+	GAME_STATUS_START,
+	GAME_STATUS_GAMING,
+	GAME_STATUS_WIN,
+	GAME_STATUS_LOSE,
+};
 
 class Player
 {
 public:
-	Player() : money(0), is_end(false) {}
+	Player();
 	void Update();
 	void Update(time_t now_sec, clock_t interval);
 	//bool BuildHospital();
@@ -25,10 +35,12 @@ private:
 public:
 	Human human;
 	Hospital hospital;
+	Question question;
 
 private:
+	int game_status;
 	int money;
-	bool is_end;
+	int choose;
 };
 
 

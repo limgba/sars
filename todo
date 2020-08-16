@@ -1,7 +1,8 @@
-sars drug
-human hospital
 player
-main.cpp
+	hospital
+	human
+		drug
+		sars
 
 
 win_condition
@@ -22,3 +23,14 @@ event
 		lose;
 	--human.total_num
 		human.satisfaction -= 2;
+
+	choose
+	
+界面展示
+对话进度与状态
+
+start
+gaming
+end
+	win
+	lose
