@@ -14,6 +14,7 @@ extern int game_status;
 
 int GetChoose();
 int GetGameStatus();
+void SetGameStatus(int status);
 int mygetch();
 void* p_input(void* arg);
 

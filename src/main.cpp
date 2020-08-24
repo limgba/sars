@@ -7,10 +7,10 @@ int main(int argc, char **argv)
 	sem_t sem;
 	pthread_t tid;
 	sem_init(&sem, 0, 1);
-	pthread_create(&tid, NULL, p_input, NULL);
+	Player player;
+	pthread_create(&tid, NULL, p_input, &player);
 	while (true)
 	{
-		Player player;
 		player.Update();
 	}
 	pthread_join(tid, NULL);

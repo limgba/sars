@@ -36,6 +36,7 @@ public:
 	Human human;
 	Hospital hospital;
 	Question question;
+	EventBus event_bus;
 
 private:
 	int game_status;

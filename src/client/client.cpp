@@ -1,9 +1,16 @@
 #include "client.h"
+#include "../other/event/event.h"
+#include "../player/player.h"
 
 int choose = 0;
 int game_status = 0;
 int GetChoose() { return choose; }
 int GetGameStatus() { return game_status; }
+void SetGameStatus(int status)
+{
+	
+	game_status = status;
+}
 
 int mygetch()
 {
@@ -23,6 +30,7 @@ int mygetch()
 
 void* p_input(void* arg)
 {
+	Player* player = (Player*)arg;
 	clock_t c2 = clock();
 	while (true)
 	{
@@ -53,10 +61,14 @@ void* p_input(void* arg)
 		break;
 		case 'f':
 		{
+			gamestatus_change gc;
+			gc.old_status = game_status;
 			if (game_status == 0)
 			{
 				++game_status;
 			}
+			gc.cur_status = game_status;
+			player->event_bus.notify<gamestatus_change>(gc);
 		}
 		break;
 		}

@@ -1,35 +1,62 @@
 #include "player.h"
+#include <iostream>
+#include "../other/event/event.h"
+#include "../other/event/eventdef.h"
 
 Player::Player() : game_status(0), money(0), choose(0)
-{}
+{
+	{
+		std::function<void(const gamestatus_change&)> f = [](const auto& e)
+		{
+			if (e.old_status == e.cur_status)
+			{
+				return;
+			}
+			switch (e.cur_status)
+			{
+			case 0:
+			{
+				std::cout << "start game" << std::endl;
+			}
+			break;
+			case 1:
+			{
+				std::cout << "question anwser" << std::endl;
+
+			}
+			break;
+			case 2:
+			{
+				std::cout << "you win" << std::endl;
+			}
+			break;
+			case 3:
+			{
+				std::cout << "you lose" << std::endl;
+			}
+			break;
+			}
+		};
+		event_bus.listen(f);
+	}
+}
 
 
 void Player::Update()
 {
-	if (game_status == GAME_STATUS_START)
+	clock_t c2 = clock();
+	clock_t interval;
+	clock_t interval_limit = 1 * CLOCKS_PER_SEC;
+	while (true)
 	{
-		std::cout << "按f开始游戏" << std::endl;
-	}
-	else if (game_status == GAME_STATUS_GAMING)
-	{
-		clock_t c2 = clock();
-		clock_t interval;
-		clock_t interval_limit = 1 * CLOCKS_PER_SEC;
-		while (true)
+		interval = clock() - c2;
+		if (interval < interval_limit)
 		{
-			interval = clock() - c2;
-			if (interval < interval_limit)
-			{
-				continue;
-			}
-			time_t t = time(NULL);
-			this->Update(t, interval);
-			c2 = clock();
+			continue;
 		}
-	}
-	else
-	{
-		std::cout << "按f键重新开始" << std::endl;
+		time_t t = time(NULL);
+		this->Update(t, interval);
+		c2 = clock();
 	}
 }
 
@@ -38,16 +65,13 @@ void Player::Update(time_t now_sec, clock_t interval)
 	if (this->CheckWin())
 	{
 		game_status = GAME_STATUS_WIN;
-		std::cout << "恭喜你获得了胜利" << std::endl;
 	}
 	else if (this->CheckLose())
 	{
 		game_status = GAME_STATUS_LOSE;
-		std::cout << "很遗憾， 游戏失败" << std::endl;
 	}
 	else
 	{
-		//question.Update(now_sec, interval);
 		hospital.Update(now_sec, interval);
 		human.Update(now_sec, interval);
 	}
