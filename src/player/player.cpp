@@ -22,7 +22,6 @@ Player::Player() : m_money(0), m_started(0)
 			case 1:
 			{
 				question.display(GetChoose());
-
 			}
 			break;
 			case 2:
@@ -103,4 +102,9 @@ bool Player::CheckLose()
 {
 	return false;
 	return human.GetTotalNum() == human.GetInfectionNum();
+}
+
+void Player::OnConfirm(int qa_index)
+{
+
 }

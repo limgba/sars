@@ -13,6 +13,10 @@ void SetChoose(Player* player, int _choose)
 		return;
 	}
 	const size_t MAX_SIZE = player->question.GetChooseSize();
+	if (MAX_SIZE == 0)
+	{
+		return;
+	}
 	if (_choose < 0)
 	{
 		_choose = 0;
@@ -25,8 +29,8 @@ void SetChoose(Player* player, int _choose)
 	question_choose qc;
 	qc.qa_choose = choose;
 	player->event_bus.notify(qc);
-
 }
+
 void SetGameStatus(Player* player, int status)
 {
 	if (nullptr == player)

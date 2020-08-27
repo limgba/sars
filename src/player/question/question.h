@@ -5,6 +5,8 @@
 #include "../../other/event/event.h"
 #include "../../other/event/eventdef.h"
 
+class Player;
+
 struct a_next
 {
 	a_next(const std::string& a, const size_t& next)
@@ -35,9 +37,10 @@ public:
 	void display(size_t choose);
 	bool confirm(size_t choose);
 	size_t GetChooseSize();
-
+	void InitPlayer(Player* player) { m_player = player; }
 
 private:
+	Player* m_player;
 	size_t qa_index;
 	std::vector<qa> qa_vec;
 	EventBus event_bus;

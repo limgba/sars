@@ -21,6 +21,7 @@ public:
 	//void ShowScore();
 	//bool IsEnd();
 	//bool IsWin();
+	void OnConfirm(int qa_index);
 	
 private:
 	bool CheckWin();
