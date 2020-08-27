@@ -6,10 +6,38 @@ int choose = 0;
 int game_status = 0;
 int GetChoose() { return choose; }
 int GetGameStatus() { return game_status; }
-void SetGameStatus(int status)
+void SetChoose(Player* player, int _choose)
 {
-	
+	if (nullptr == player)
+	{
+		return;
+	}
+	const size_t MAX_SIZE = player->question.GetChooseSize();
+	if (_choose < 0)
+	{
+		_choose = 0;
+	}
+	else if ((size_t)_choose >= MAX_SIZE)
+	{
+		_choose = MAX_SIZE - 1;
+	}
+	choose = _choose;
+	question_choose qc;
+	qc.qa_choose = choose;
+	player->event_bus.notify(qc);
+
+}
+void SetGameStatus(Player* player, int status)
+{
+	if (nullptr == player)
+	{
+		return;
+	}
+	gamestatus_change gc;
+	gc.old_status = game_status;
 	game_status = status;
+	gc.cur_status = game_status;
+	player->event_bus.notify<gamestatus_change>(gc);
 }
 
 int mygetch()
@@ -31,6 +59,10 @@ int mygetch()
 void* p_input(void* arg)
 {
 	Player* player = (Player*)arg;
+	if (nullptr == player)
+	{
+		return nullptr;
+	}
 	clock_t c2 = clock();
 	while (true)
 	{
@@ -41,44 +73,36 @@ void* p_input(void* arg)
 		{
 		case 'w':
 		{
-			choose -= 2;
+			SetChoose(player, choose - 1);
 		}
 		break;
 		case 'a':
 		{
-			choose -= 1;
+			SetChoose(player, choose - 2);
 		}
 		break;
 		case 's':
 		{
-			choose += 2;
+			SetChoose(player, choose + 1);
 		}
 		break;
 		case 'd':
 		{
-			choose += 1;
+			SetChoose(player, choose + 2);
 		}
 		break;
 		case 'f':
 		{
-			gamestatus_change gc;
-			gc.old_status = game_status;
 			if (game_status == 0)
 			{
-				++game_status;
+				SetGameStatus(player, GAME_STATUS_GAMING);
 			}
-			gc.cur_status = game_status;
-			player->event_bus.notify<gamestatus_change>(gc);
+			else if (game_status == 1)
+			{
+				player->question.confirm(choose);
+			}
 		}
 		break;
-		}
-		if (choose > 3)
-		{
-			choose = 3;
-		}
-		else if (choose < 0)
-		{
-			choose = 0;
 		}
 		c2 = clock();
 	}

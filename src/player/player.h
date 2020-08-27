@@ -6,13 +6,6 @@
 #include "../client/client.h"
 #include "question/question.h"
 
-enum GAME_STATUS
-{
-	GAME_STATUS_START,
-	GAME_STATUS_GAMING,
-	GAME_STATUS_WIN,
-	GAME_STATUS_LOSE,
-};
 
 class Player
 {
@@ -39,9 +32,8 @@ public:
 	EventBus event_bus;
 
 private:
-	int game_status;
-	int money;
-	int choose;
+	int m_money;
+	bool m_started;
 };
 
 

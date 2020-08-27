@@ -34,6 +34,7 @@ public:
 	void init_event();
 	void display(size_t choose);
 	bool confirm(size_t choose);
+	size_t GetChooseSize();
 
 
 private:
