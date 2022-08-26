@@ -1,4 +1,4 @@
-#ifndef SARS_H
+﻿#ifndef SARS_H
 #define SARS_H
 #include <time.h>
 

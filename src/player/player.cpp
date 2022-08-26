@@ -1,4 +1,4 @@
-#include "player.h"
+﻿#include "player.h"
 #include <iostream>
 #include "../other/event/event.h"
 #include "../other/event/eventdef.h"
@@ -53,7 +53,7 @@ void Player::Update()
 {
 	clock_t c2 = clock();
 	clock_t interval;
-	clock_t interval_limit = 0.5 * CLOCKS_PER_SEC;
+	clock_t interval_limit = (clock_t)0.5 * CLOCKS_PER_SEC;
 	while (true)
 	{
 		interval = clock() - c2;

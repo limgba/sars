@@ -17,13 +17,11 @@ CXXLIB=$(incdir) -L$(libdir) $(lib)
 $(target):$(obj)
 	$(CXX) $(CXXFLAGS) $(CXXLIB) -o $@ $^ $(staticlib)
 
+
+%.o:%.cpp
+	$(CXX) $(CXXFLAGS) -c -MMD -MP -o $@ $<
+
 -include $(dir)
-%.d:%.cpp
-	@set -e; \
-	rm -f $@; \
-	$(CXX) -MM $(CXXFLAGS) $< > $@.$$$$; \
-	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
-	rm -f $@.$$$$
 
 echo:
 	@echo $(target)
@@ -34,4 +32,3 @@ echo:
 
 clean:
 	rm -f $(obj) $(target) $(dir)
-	find . -name *.d* | xargs rm -f

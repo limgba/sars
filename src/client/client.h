@@ -2,9 +2,13 @@
 #define __CLIENT_H__
 
 #include <stdio.h>
+#ifdef _WIN32
+#include <conio.h>
+#else
 #include <unistd.h>
 #include <termios.h>
 #include <linux/input.h>
+#endif
 #include <fcntl.h>
 #include <time.h>
 

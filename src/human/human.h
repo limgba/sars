@@ -1,4 +1,4 @@
-#ifndef HUMAN_H
+﻿#ifndef HUMAN_H
 #define HUMAN_H
 #include "../sars/sars.h"
 #include "../drug/drug.h"

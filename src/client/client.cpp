@@ -46,6 +46,9 @@ void SetGameStatus(Player* player, int status)
 
 int mygetch()
 {
+#ifdef _WIN32
+	return _getch();
+#else
 	struct termios oldt,
 	newt;
 	int ch;
@@ -56,7 +59,7 @@ int mygetch()
 	ch = getchar();
 	tcsetattr( STDIN_FILENO, TCSANOW, &oldt );
 	return ch;
-
+#endif
 }
 
 

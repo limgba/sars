@@ -1,4 +1,4 @@
-#include "question.h"
+﻿#include "question.h"
 #include "../player.h"
 #include <iostream>
 
@@ -157,7 +157,11 @@ void Question::display(size_t choose)
 	{
 		return;
 	}
+#ifdef _WIN32
+	system("cls");
+#else
 	system("clear");
+#endif
 	const auto& qa = qa_vec[qa_index];
 	std::cout << qa.q << std::endl;
 	for (size_t i = 0; i < qa.a_vec.size(); ++i)
